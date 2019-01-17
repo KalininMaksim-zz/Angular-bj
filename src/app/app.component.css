@@ -1,0 +1,28 @@
+.bender {
+  background: rgb(7, 190, 7); /* Цвет фона */
+  width: 1200px; /* Ширина блока */
+  height: 800px; /*высота блока*/
+  padding: 10px; /* Поля */
+  margin-top: 10px; /* Отступ сверху */
+  border: 2px solid #000; /* Параметры рамки */
+  box-sizing: border-box; /* Ширина блока с полями */
+  background-image: url(../assets/bender.png);
+  background-repeat: no-repeat;
+  background-position:0px 165px;
+}
+.result {
+  position: relative;
+  margin-top: -10px;
+  margin-left: 410px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.control-btn {
+  display: inline;
+}
+.result{
+  display: flex;
+  justify-content:start;
+  margin-top:-530px;
+
+}
