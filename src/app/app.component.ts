@@ -26,11 +26,56 @@ export class AppComponent {
   private constWin: number = 21;
   private constCheck: number = 15;
 
+
   public startGame(): void {
     this._newDeck();
     this._resetResult();
     this.takeCard();
   }
+
+  public takeCard(): void { // взять еще и перебор (игрок и дилер)
+    this.handPlayer.push(this.myDeck.pop());
+    this.playerCarts = 'player cards: ' + this.handPlayer;
+    this.allPointPlayer = 'player points: ' + this._getHandSum(this.handPlayer);
+
+    if (this._getHandSum(this.handPlayer) === this.constWin ) {
+      this.result = ' You Win!!! ';
+      this._showResult();
+      return;
+    }
+
+    if (this._getHandSum(this.handPlayer) > this.constWin) {
+      this.result = ' You Bust!!! ';
+      this._showResult();
+      return;
+    }
+
+    if (this._getHandSum(this.handDealer) <= this.constCheck) {
+      this._takeDealer();
+      return;
+    }
+  }
+
+  public compareCard(): void {
+    this._showResult();
+
+    if (this._getHandSum(this.handPlayer) === this._getHandSum(this.handDealer)) {
+      this.result = ' Nobody ';
+      return;
+    }
+
+    if (this._getHandSum(this.handPlayer) === this.constWin || this._getHandSum(this.handPlayer) > this._getHandSum(this.handDealer)) {
+      this.result = ' You Win!!! ';
+      return;
+    }
+
+    if (this._getHandSum(this.handPlayer) < this.constWin || this._getHandSum(this.handDealer) > this._getHandSum(this.handPlayer)) {
+
+      this.result = `You lose, maybe another time :)`;
+      return;
+    }
+  }
+
 
   private _newDeck(): void {
 
@@ -59,29 +104,6 @@ export class AppComponent {
     return sum;
   }
 
-  public takeCard(): void { // взять еще и перебор (игрок и дилер)
-    this.handPlayer.push(this.myDeck.pop());
-    this.playerCarts = 'player cards: ' + this.handPlayer;
-    this.allPointPlayer = 'player points: ' + this._getHandSum(this.handPlayer);
-
-    if (this._getHandSum(this.handPlayer) === this.constWin ) {
-      this.result = ' You Win!!! ';
-      this._showResult();
-      return;
-    }
-
-    if (this._getHandSum(this.handPlayer) > this.constWin) {
-      this.result = ' You Bust!!! ';
-      this._showResult();
-      return;
-    }
-
-    if (this._getHandSum(this.handDealer) <= this.constCheck) {
-      this._takeDealer();
-      return;
-    }
-  }
-
   private _takeDealer(): void {
     this.handDealer.push(this.myDeck.pop());
     this.dealerCarts = 'dealer cards: ' + this.handDealer[0];
@@ -96,25 +118,5 @@ export class AppComponent {
     this.allPointDealer = 'dealer points: ' + this._getHandSum(this.handDealer);
     this.dealerCarts = 'dealer cards: ' + this.handDealer;
     this.togle = false;
-  }
-
-  public compareCard(): void {
-    this._showResult();
-
-    if (this._getHandSum(this.handPlayer) === this._getHandSum(this.handDealer)) {
-      this.result = ' Nobody ';
-      return;
-    }
-
-    if (this._getHandSum(this.handPlayer) === this.constWin || this._getHandSum(this.handPlayer) > this._getHandSum(this.handDealer)) {
-      this.result = ' You Win!!! ';
-      return;
-    }
-
-    if (this._getHandSum(this.handPlayer) < this.constWin || this._getHandSum(this.handDealer) > this._getHandSum(this.handPlayer)) {
-
-      this.result = `You lose, maybe another time :)`;
-      return;
-    }
   }
 }
