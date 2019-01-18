@@ -16,24 +16,25 @@ export class AppComponent {
   public dealerCarts: string = `dealer cards: `;
   public allPointDealer: string = `dealer points: `;
   public result: string = `Let's play, a piece of meat?`;
-  public togle: boolean = false; //false --> none // true --> inlaine
+  public togle: boolean = false; // false --> none // true --> inlaine
 
 
   private _deck: number[] = [6, 7, 8, 9, 10, 2, 3, 4, 11,
   6, 7, 8, 9, 10, 2, 3, 4, 11,
   6, 7, 8, 9, 10, 2, 3, 4, 11,
   6, 7, 8, 9, 10, 2, 3, 4, 11];
+  private constWin: number = 21;
+  private constCheck: number = 15;
 
-  
   public startGame(): void {
-    this.newDeck();
-    this.resetResult();
+    this._newDeck();
+    this._resetResult();
     this.takeCard();
   }
 
-  public newDeck(): void {
+  private _newDeck(): void {
 
-    if(this.myDeck.length !== 0) {
+    if (this.myDeck.length !== 0) {
       this.myDeck = [...this.myDeck, ...this.handDealer, ...this.handPlayer];
       this.myDeck.sort(() => .5 - Math.random());
     } else {
@@ -41,103 +42,78 @@ export class AppComponent {
     }
   }
 
-  public resetResult(): void {
+  private _resetResult(): void {
     this.handPlayer = [];
     this.handDealer = [];
-  
-    // document.querySelector('.result').innerHTML = 'Let&#39;s play, a piece of meat?';
     this.result = `Let's play, a piece of meat?`;
-    // document.querySelector('.all-point-dealer').innerHTML = 'dealer points: ';
     this.allPointDealer = 'dealer points: ';
-    // document.querySelector('.all-point-player').innerHTML = 'player points: ';
     this.allPointPlayer = 'player points: ';
-    // document.querySelector('.control-btn').style.display = 'inline';
     this.togle = true;
-    
   }
 
-  public getHandSum(hand): number { //сумма номинала в руке
-    let sum = 0;
-  
-    for (let i = 0; hand.length > i; i++) {
+  private _getHandSum(hand: number[]): number { // сумма номинала в руке
+    let sum: number = 0;
+    for (let i: number = 0; hand.length > i; i++) {
       sum += hand[i];
-    };
-  
+    }
     return sum;
   }
 
   public takeCard(): void { // взять еще и перебор (игрок и дилер)
     this.handPlayer.push(this.myDeck.pop());
-  
     this.playerCarts = 'player cards: ' + this.handPlayer;
-    this.allPointPlayer = 'player points: ' + this.getHandSum(this.handPlayer);
-  
-    if(this.getHandSum(this.handDealer) <= 15) {
-      this.takeDealer();
-  
-      return;       
-    }
-  
-    if(this.getHandSum(this.handPlayer) == 21) {
-     
+    this.allPointPlayer = 'player points: ' + this._getHandSum(this.handPlayer);
+
+    if (this._getHandSum(this.handPlayer) === this.constWin ) {
       this.result = ' You Win!!! ';
-      this.showResult();
-  
+      this._showResult();
       return;
     }
-  
-    if(this.getHandSum(this.handPlayer) > 21) {
-     debugger;
+
+    if (this._getHandSum(this.handPlayer) > this.constWin) {
       this.result = ' You Bust!!! ';
-      this.showResult();
-  
+      this._showResult();
+      return;
+    }
+
+    if (this._getHandSum(this.handDealer) <= this.constCheck) {
+      this._takeDealer();
       return;
     }
   }
 
-  public takeDealer(): void {
+  private _takeDealer(): void {
     this.handDealer.push(this.myDeck.pop());
-   
     this.dealerCarts = 'dealer cards: ' + this.handDealer[0];
-  
-    if(this.getHandSum(this.handDealer) > 21) {
-      
+    if (this._getHandSum(this.handDealer) > this.constWin) {
       this.result = ' Bust dealer!!! Dammit! ';
-      this.showResult();
-  
+      this._showResult();
       return;
     }
   }
 
-  public showResult(): void {
-  
-    this.allPointDealer = 'dealer points: ' + this.getHandSum(this.handDealer);
+  private _showResult(): void {
+    this.allPointDealer = 'dealer points: ' + this._getHandSum(this.handDealer);
     this.dealerCarts = 'dealer cards: ' + this.handDealer;
-  
     this.togle = false;
   }
 
   public compareCard(): void {
-    this.showResult();
-  
-    if(this.getHandSum(this.handPlayer) == this.getHandSum(this.handDealer)) {
-    
-      this.result = ' Nobody ';
-  
-      return;
-    }
-  
-    if(this.getHandSum(this.handPlayer) == 21 || this.getHandSum(this.handPlayer) > this.getHandSum(this.handDealer)) {
-    
-      this.result = ' You Win!!! ';
-  
-      return;
-    }
-  
-    if(this.getHandSum(this.handPlayer) < 21 || this.getHandSum(this.handDealer) > this.getHandSum(this.handPlayer)) {
+    this._showResult();
 
-      this.result = 'You lose, maybe<br>another time, darling :))';
-  
+    if (this._getHandSum(this.handPlayer) === this._getHandSum(this.handDealer)) {
+      this.result = ' Nobody ';
+      return;
+    }
+
+    if (this._getHandSum(this.handPlayer) === this.constWin || this._getHandSum(this.handPlayer) > this._getHandSum(this.handDealer)) {
+      this.result = ' You Win!!! ';
+      return;
+    }
+
+    if (this._getHandSum(this.handPlayer) < this.constWin || this._getHandSum(this.handDealer) > this._getHandSum(this.handPlayer)) {
+
+      this.result = `You lose, maybe another time :)`;
       return;
     }
   }
