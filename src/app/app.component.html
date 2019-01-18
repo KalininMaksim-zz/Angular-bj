@@ -1,20 +1,40 @@
 <section class="bender">
   <button class="start-game" (click)="startGame()">Start Game</button><br><br>
 
-  <div *ngIf=togle class="control-btn"> 
-    <button class="take-mor-player" (click)="takeCard()">I'll take more</button>
-    <button class="show-the-cards" (click)="compareCard()">show the cards</button><br><br>
+  <div *ngIf=toggle
+       class="control-btn">
+
+    <button class="take-mor-player"
+            (click)="takeCard()">
+      I'll take more
+    </button>
+    <button class="show-the-cards"
+            (click)="compareCard()">
+      show the cards
+    </button><br><br>
   </div>
   
 
-  <div class="player-carts">{{ playerCarts }}</div><br>
-  <div class="all-point-player">{{ allPointPlayer }}</div><br><br>
+  <div class="player-carts">
+    {{ playerCarts }}
+  </div><br>
 
-  <div class="dealer-carts">{{ dealerCarts }}</div><br>
-  <div class="all-point-dealer">{{ allPointDealer }}</div><br>
+  <div class="all-point-player">
+    {{ allPointPlayer }}
+  </div><br><br>
+
+  <div class="dealer-carts">
+    {{ dealerCarts }}
+  </div><br>
+
+  <div class="all-point-dealer">
+    {{ allPointDealer }}
+  </div>
   <br>
   <br>  
 </section>
 
-<div class="result">{{ result }}</div>
+<div class="result">
+  {{ result }}
+</div>
 
