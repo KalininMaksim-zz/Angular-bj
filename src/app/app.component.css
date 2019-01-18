@@ -17,7 +17,8 @@
   font-weight: bold;
   font-size: 20px;
 }
-.control-btn {
+.control-btn button {
+  margin:5px;
   display: inline;
 }
 .result{
@@ -25,4 +26,11 @@
   justify-content:start;
   margin-top:-530px;
 
+}
+.start-game {
+  margin: 5px;
+}
+
+.score div {
+  margin-bottom: 10px;
 }

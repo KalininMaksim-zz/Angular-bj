@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
 
-  public playerCarts: string = `player carts: `;
-  public allPointPlayer: string = `player points: `;
-  public dealerCarts: string = `dealer cards: `;
-  public allPointDealer: string = `dealer points: `;
+  public playerCarts: string;
+  public allPointPlayer: string;
+  public dealerCarts: string;
+  public allPointDealer: string;
   public result: string = `Let's play, a piece of meat?`;
   public toggle: boolean = false; // false --> none // true --> inline
 
@@ -34,8 +34,8 @@ export class AppComponent {
 
   public takeCard(): void { // взять еще и перебор (игрок и дилер)
     this._handPlayer.push(this._myDeck.pop());
-    this.playerCarts = 'player cards: ' + this._handPlayer;
-    this.allPointPlayer = 'player points: ' + this._getHandSum(this._handPlayer);
+    this.playerCarts = this._handPlayer.toString();
+    this.allPointPlayer = this._getHandSum(this._handPlayer).toString();
 
     if (this._getHandSum(this._handPlayer) === this.CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
@@ -83,32 +83,29 @@ export class AppComponent {
     if (this._myDeck.length !== 0) {
       this._myDeck = [...this._myDeck, ...this._handDealer, ...this._handPlayer];
       this._myDeck.sort(() => .5 - Math.random());
-    } else {
-      this._myDeck = this._deck.sort(() => .5 - Math.random());
     }
+    this._myDeck = this._deck.sort(() => .5 - Math.random());
   }
 
   private _resetResult(): void {
     this._handPlayer = [];
     this._handDealer = [];
     this.result = `Let's play, a piece of meat?`;
-    this.allPointDealer = 'dealer points: ';
-    this.allPointPlayer = 'player points: ';
+    this.allPointDealer = '';
+    this.allPointPlayer = '';
     this.toggle = true;
   }
 
   private _getHandSum(hand: number[]): number { // сумма номинала в руке
     let sum: number = 0;
-    for (let i: number = 0; hand.length > i; i++) {
-      sum += hand[i];
-    }
+    hand.forEach(( item: number ) => sum += item);
 
     return sum;
   }
 
   private _takeDealer(): void {
     this._handDealer.push(this._myDeck.pop());
-    this.dealerCarts = 'dealer cards: ' + this._handDealer[0];
+    this.dealerCarts = this._handDealer[0].toString();
     if (this._getHandSum(this._handDealer) > this.CHECK_THE_VALUE_WIN) {
       this._showResult(' Bust dealer!!! Dammit! ');
       return;
@@ -117,9 +114,8 @@ export class AppComponent {
 
   private _showResult(message: string): void {
     this.result = message;
-    this.allPointDealer = 'dealer points: ' + this._getHandSum(this._handDealer);
-    this.dealerCarts = 'dealer cards: ' + this._handDealer;
+    this.allPointDealer = this._getHandSum(this._handDealer).toString();
+    this.dealerCarts = this._handDealer.toString();
     this.toggle = false;
-
   }
 }

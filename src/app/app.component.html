@@ -1,5 +1,5 @@
 <section class="bender">
-  <button class="start-game" (click)="startGame()">Start Game</button><br><br>
+  <button class="start-game" (click)="startGame()">Start Game</button>
 
   <div *ngIf=toggle
        class="control-btn">
@@ -8,30 +8,34 @@
             (click)="takeCard()">
       I'll take more
     </button>
+
     <button class="show-the-cards"
             (click)="compareCard()">
       show the cards
-    </button><br><br>
+    </button>
   </div>
   
+<div class="score">
 
   <div class="player-carts">
-    {{ playerCarts }}
-  </div><br>
+    player cards: {{ playerCarts }}
+  </div>
 
   <div class="all-point-player">
-    {{ allPointPlayer }}
-  </div><br><br>
+    all point player: {{ allPointPlayer }}
+  </div>
 
   <div class="dealer-carts">
-    {{ dealerCarts }}
-  </div><br>
+    dealer carts: {{ dealerCarts }}
+  </div>
 
   <div class="all-point-dealer">
-    {{ allPointDealer }}
+    all point dealer: {{ allPointDealer }}
   </div>
-  <br>
-  <br>  
+
+</div>
+
+
 </section>
 
 <div class="result">
