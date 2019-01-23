@@ -10,8 +10,7 @@ export class AppComponent {
   public handPlayer: number[] = [];
   public handDealer: number[] = [];
   public result: string = `Let's play, a piece of meat?`;
-  public hideElem: boolean = false; // false --> hide // true --> show
-  public showElem: boolean = true;
+  public itsEnitStayte: boolean = false; // false --> hide // true --> show
   public sumDealerCards: number = 0;
   public sumPlayerCards: number = 0;
 
@@ -30,8 +29,7 @@ export class AppComponent {
     this._newDeck();
     this._resetResult();
     this.takeCard();
-    this.showElem = false;
-    this.hideElem = true;
+    this.itsEnitStayte = true;
 
   }
   public getHandSum(hand: number[]): number { // amount of nominal in hand
@@ -43,6 +41,7 @@ export class AppComponent {
   public takeCard(): void { // take more & bust (player & dealer)
     this.handPlayer.push(this._myDeck.pop());
     this.sumPlayerCards = this.getHandSum(this.handPlayer);
+
     if (this.sumPlayerCards === this.CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
 
@@ -100,15 +99,16 @@ export class AppComponent {
   private _takeDealer(): void {
     this.handDealer.push(this._myDeck.pop());
     this.sumDealerCards = this.getHandSum(this.handDealer);
+
     if (this.sumDealerCards > this.CHECK_THE_VALUE_WIN) {
       this._showResult(' Bust dealer!!! Dammit! ');
+
       return;
     }
   }
 
   private _showResult(message: string): void {
     this.result = message;
-    this.showElem = true;
-    this.hideElem = false;
+    this.itsEnitStayte = false;
   }
 }
