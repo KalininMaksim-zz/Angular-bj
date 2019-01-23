@@ -32,13 +32,13 @@ export class AppComponent {
     this.toggleOff = true;
 
   }
-  public getHandSum(hand: number[]): number { // сумма номинала в руке
+  public getHandSum(hand: number[]): number { // amount of nominal in hand
     let sum: number = 0;
     hand.forEach(( item: number ) => sum += item);
 
     return sum;
   }
-  public takeCard(): void { // взять еще и перебор (игрок и дилер)
+  public takeCard(): void { // take more & bust (player & dealer)
     this.handPlayer.push(this._myDeck.pop());
     if (this.getHandSum(this.handPlayer) === this.CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
