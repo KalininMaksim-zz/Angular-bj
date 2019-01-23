@@ -5,7 +5,7 @@
   </button>
 
   <div class="control-btn"
-       *ngIf="toggleOff">
+       *ngIf="hideElem">
 
     <button class="take-mor-player"
             (click)="takeCard()">
@@ -30,27 +30,27 @@
   </div>
 
   <div class="all-point-player">
-    all point player: {{ getHandSum(handPlayer) }}
+    all point player: {{ sumPlayerCards }}
   </div>
 
   <div class="dealer-carts" >
     dealer carts:
-    <span *ngIf="toggleOn">
+    <span *ngIf="showElem">
       <span
         *ngFor="let dealerCarts of handDealer">
         | {{ dealerCarts }} |
       </span>
     </span>
 
-    <span *ngIf="toggleOff">
+    <span *ngIf="hideElem">
       | {{ handDealer }} |
     </span>
   </div>
 
   <div class="all-point-dealer">
     all point dealer:
-    <span *ngIf="toggleOn">
-      {{ getHandSum(handDealer) }}
+    <span *ngIf="showElem">
+      {{ sumDealerCards }}
     </span>
   </div>
 

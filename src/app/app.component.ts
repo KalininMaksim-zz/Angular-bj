@@ -7,16 +7,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  public handPlayer: number[] = [];
+  public handDealer: number[] = [];
   public result: string = `Let's play, a piece of meat?`;
-  public toggleOff: boolean = false; // false --> none // true --> inline
-  public toggleOn: boolean = true;
+  public hideElem: boolean = false; // false --> hide // true --> show
+  public showElem: boolean = true;
+  public sumDealerCards: number = 0;
+  public sumPlayerCards: number = 0;
 
 
   private readonly CHECK_THE_VALUE_WIN: number = 21;
   private readonly CHECKING_DEALER_ACTIONS: number = 15;
 
-  private handPlayer: number[] = [];
-  private handDealer: number[] = [];
   private _myDeck: number[] = [];
   private _deck: number[] = [6, 7, 8, 9, 10, 2, 3, 4, 11,
     6, 7, 8, 9, 10, 2, 3, 4, 11,
@@ -28,8 +30,8 @@ export class AppComponent {
     this._newDeck();
     this._resetResult();
     this.takeCard();
-    this.toggleOn = false;
-    this.toggleOff = true;
+    this.showElem = false;
+    this.hideElem = true;
 
   }
   public getHandSum(hand: number[]): number { // amount of nominal in hand
@@ -40,19 +42,20 @@ export class AppComponent {
   }
   public takeCard(): void { // take more & bust (player & dealer)
     this.handPlayer.push(this._myDeck.pop());
-    if (this.getHandSum(this.handPlayer) === this.CHECK_THE_VALUE_WIN) {
+    this.sumPlayerCards = this.getHandSum(this.handPlayer);
+    if (this.sumPlayerCards === this.CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
 
       return;
     }
 
-    if (this.getHandSum(this.handPlayer) > this.CHECK_THE_VALUE_WIN) {
+    if (this.sumPlayerCards > this.CHECK_THE_VALUE_WIN) {
       this._showResult('You Bust!!!');
 
       return;
     }
 
-    if (this.getHandSum(this.handDealer) <= this.CHECKING_DEALER_ACTIONS) {
+    if (this.sumDealerCards <= this.CHECKING_DEALER_ACTIONS) {
       this._takeDealer();
 
       return;
@@ -60,19 +63,19 @@ export class AppComponent {
   }
 
   public compareCard(): void {
-    if (this.getHandSum(this.handPlayer) === this.getHandSum(this.handDealer)) {
+    if (this.sumPlayerCards === this.sumDealerCards) {
       this._showResult('Nobody');
 
       return;
     }
 
-    if (this.getHandSum(this.handPlayer) > this.getHandSum(this.handDealer)) {
+    if (this.sumPlayerCards > this.sumDealerCards) {
       this._showResult('You Win!!!');
 
       return;
     }
 
-    if (this.getHandSum(this.handDealer) > this.getHandSum(this.handPlayer)) {
+    if (this.sumDealerCards > this.sumPlayerCards) {
       this._showResult('You lose, maybe another time :)');
 
       return;
@@ -96,7 +99,8 @@ export class AppComponent {
 
   private _takeDealer(): void {
     this.handDealer.push(this._myDeck.pop());
-    if (this.getHandSum(this.handDealer) > this.CHECK_THE_VALUE_WIN) {
+    this.sumDealerCards = this.getHandSum(this.handDealer);
+    if (this.sumDealerCards > this.CHECK_THE_VALUE_WIN) {
       this._showResult(' Bust dealer!!! Dammit! ');
       return;
     }
@@ -104,7 +108,7 @@ export class AppComponent {
 
   private _showResult(message: string): void {
     this.result = message;
-    this.toggleOn = true;
-    this.toggleOff = false;
+    this.showElem = true;
+    this.hideElem = false;
   }
 }
