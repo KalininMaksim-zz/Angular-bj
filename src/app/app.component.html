@@ -1,8 +1,11 @@
 <section class="bender">
-  <button class="start-game" (click)="startGame()">Start Game</button>
+  <button class="start-game"
+          (click)="startGame()">
+    Start Game
+  </button>
 
-  <div *ngIf=toggle
-       class="control-btn">
+  <div class="control-btn"
+       *ngIf="toggleOff">
 
     <button class="take-mor-player"
             (click)="takeCard()">
@@ -18,19 +21,37 @@
 <div class="score">
 
   <div class="player-carts">
-    player cards: {{ playerCarts }}
+    player cards:
+
+    <span class="player-hand"
+          *ngFor="let playerCard of handPlayer">
+      | {{ playerCard }} |
+    </span>
   </div>
 
   <div class="all-point-player">
-    all point player: {{ allPointPlayer }}
+    all point player: {{ getHandSum(handPlayer) }}
   </div>
 
-  <div class="dealer-carts">
-    dealer carts: {{ dealerCarts }}
+  <div class="dealer-carts" >
+    dealer carts:
+    <span *ngIf="toggleOn">
+      <span
+        *ngFor="let dealerCarts of handDealer">
+        | {{ dealerCarts }} |
+      </span>
+    </span>
+
+    <span *ngIf="toggleOff">
+      | {{ handDealer }} |
+    </span>
   </div>
 
   <div class="all-point-dealer">
-    all point dealer: {{ allPointDealer }}
+    all point dealer:
+    <span *ngIf="toggleOn">
+      {{ getHandSum(handDealer) }}
+    </span>
   </div>
 
 </div>
