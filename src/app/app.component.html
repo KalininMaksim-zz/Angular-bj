@@ -5,7 +5,7 @@
   </button>
 
   <div class="control-btn"
-       *ngIf="itsEnitStayte">
+       *ngIf="itsEnidState">
 
     <button class="take-mor-player"
             (click)="takeCard()">
@@ -35,30 +35,27 @@
 
     <div class="dealer-carts" >
       dealer carts:
-      <span *ngIf="!itsEnitStayte">
+      <span *ngIf="!itsEnidState">
         <span
           *ngFor="let dealerCarts of handDealer">
           | {{ dealerCarts }} |
         </span>
       </span>
 
-      <span *ngIf="itsEnitStayte">
+      <span *ngIf="itsEnidState">
         | {{ handDealer }} |
       </span>
     </div>
 
     <div class="all-point-dealer">
       all point dealer:
-      <span *ngIf="!itsEnitStayte">
+      <span *ngIf="!itsEnidState">
         {{ sumDealerCards }}
       </span>
     </div>
   </div>
-
-
 </section>
 
 <div class="result">
   {{ result }}
 </div>
-
