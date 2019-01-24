@@ -1,4 +1,4 @@
-<section class="bender">
+<div class="field-score">
   <button class="start-game"
           (click)="startGame()">
     Start Game
@@ -17,7 +17,7 @@
       show the cards
     </button>
   </div>
-  
+
   <div class="score">
 
     <div class="player-carts">
@@ -54,8 +54,16 @@
       </span>
     </div>
   </div>
+</div>
+
+
+<section class="bender">
+
+  <div class="result">
+    {{ result }}
+  </div>
+
+
 </section>
 
-<div class="result">
-  {{ result }}
-</div>
+
