@@ -4,17 +4,10 @@ import { ScoreComponent } from '../app/black-jack/score/score.component';
 import { GameComponent } from '../app/black-jack/game/game.component';
 import { AppComponent } from './app.component';
 import { BlackJackComponent } from './black-jack/black-jack.component';
-import {Routes, RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
 import { ErrorComponent } from './error/error.component';
-
-const appRoutes: Routes =[
-  { path: '', redirectTo: 'menu', pathMatch: 'full'},
-  { path: 'menu', component: MenuComponent },
-  { path: 'game', component: BlackJackComponent},
-  { path: '**', component: ErrorComponent }
-];
-
+import { appRoutes } from '../app/routers';
 
 @NgModule({
   declarations: [
