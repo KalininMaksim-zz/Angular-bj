@@ -1,69 +1,16 @@
-<div class="field-score">
-  <button class="start-game"
-          (click)="startGame()">
-    Start Game
-  </button>
+<app-score (emitStartGame)="startGame()"
+            (emitTakeCard)="takeCard()"
+            (emitCompareCard)="compareCard()"
 
-  <div class="control-btn"
-       *ngIf="itsEnidState">
-
-    <button class="take-mor-player"
-            (click)="takeCard()">
-      I'll take more
-    </button>
-
-    <button class="show-the-cards"
-            (click)="compareCard()">
-      show the cards
-    </button>
-  </div>
-
-  <div class="score">
-
-    <div class="player-carts">
-      player cards:
-
-      <span class="player-hand"
-            *ngFor="let playerCard of handPlayer">
-        | {{ playerCard }} |
-      </span>
-    </div>
-
-    <div class="all-point-player">
-      all point player: {{ sumPlayerCards }}
-    </div>
-
-    <div class="dealer-carts" >
-      dealer carts:
-      <span *ngIf="!itsEnidState">
-        <span
-          *ngFor="let dealerCarts of handDealer">
-          | {{ dealerCarts }} |
-        </span>
-      </span>
-
-      <span *ngIf="itsEnidState">
-        | {{ handDealer }} |
-      </span>
-    </div>
-
-    <div class="all-point-dealer">
-      all point dealer:
-      <span *ngIf="!itsEnidState">
-        {{ sumDealerCards }}
-      </span>
-    </div>
-  </div>
-</div>
+           [handPlayerInScore]="handPlayer"
+           [isShowButtons]="itsEnidState"
+           [sumDealerCardsInScore]="sumDealerCards"
+           [sumPlayerCardsInScore]="sumPlayerCards"
+           [handDealerInScore]="handDealer" ></app-score>
+           
+<app-game [resultInGame]="result"></app-game>
 
 
-<section class="bender">
 
-  <div class="result">
-    {{ result }}
-  </div>
-
-
-</section>
 
 

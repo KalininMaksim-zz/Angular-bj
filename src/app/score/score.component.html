@@ -1,0 +1,57 @@
+<div class="field-score">
+  <button class="start-game"
+          (click)="startGameButtonClicked()">
+    Start Game
+  </button>
+
+  <div class="control-btn"
+       *ngIf="isShowButtons">
+
+    <button class="take-mor-player"
+            (click)="takeCardButtonCliked()">
+      I'll take more
+    </button>
+
+    <button class="show-the-cards"
+            (click)="compareCardCliked()">
+      show the cards
+    </button>
+  </div>
+
+  <div class="score">
+
+    <div class="player-carts">
+      player cards:
+
+      <span class="player-hand"
+            *ngFor="let playerCard of handPlayerInScore">
+        | {{ playerCard }} |
+      </span>
+    </div>
+
+    <div class="all-point-player">
+      all point player: {{ sumPlayerCardsInScore }}
+    </div>
+
+    <div class="dealer-carts" >
+      dealer carts:
+      <span *ngIf="!isShowButtons">
+        <span
+          *ngFor="let dealerCarts of handDealerInScore">
+          | {{ dealerCarts }} |
+        </span>
+      </span>
+
+      <span *ngIf="isShowButtons">
+        | {{ handDealerInScore }} |
+      </span>
+    </div>
+
+    <div class="all-point-dealer">
+      all point dealer:
+      <span *ngIf="!isShowButtons">
+        {{ sumDealerCardsInScore }}
+      </span>
+    </div>
+  </div>
+</div>

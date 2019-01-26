@@ -1,0 +1,19 @@
+.field-score {
+  display: flex;
+  justify-content: start;
+  width: 1195px;
+  border: 2px solid #000;
+}
+.control-btn button {
+  margin: 5px;
+  display: inline;
+  padding: 59px 5px 59px 5px;
+}
+.score div {
+  margin: 15px 15px 15px 15px;
+}
+
+
+.start-game {
+  margin: 5px 5px 5px 5px;
+}

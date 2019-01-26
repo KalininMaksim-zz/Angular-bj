@@ -26,6 +26,7 @@ export class AppComponent {
 
 
   public startGame(): void {
+  console.log("in app")
     this._newDeck();
     this._resetResult();
     this.takeCard();
@@ -40,6 +41,7 @@ export class AppComponent {
     return sum;
   }
   public takeCard(): void { // take more & bust (player & dealer)
+    console.log('я попал в tekeCard')
     this.handPlayer.push(this._myDeck.pop());
     this.sumPlayerCards = this.getHandSum(this.handPlayer);
 
@@ -63,6 +65,7 @@ export class AppComponent {
   }
 
   public compareCard(): void {
+    console.log("сравниваю карты")
     if (this.sumPlayerCards === this.sumDealerCards) {
       this._showResult('Nobody');
 
