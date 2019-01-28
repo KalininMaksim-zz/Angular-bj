@@ -19,7 +19,7 @@ import { appRoutes } from '../app/routers';
     ErrorComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],

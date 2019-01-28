@@ -10,13 +10,13 @@ export class BlackJackComponent  {
   public handPlayer: number[] = [];
   public handDealer: number[] = [];
   public result: string = `Let's play, a piece of meat?`;
-  public itsEnidState: boolean = false; // false --> hide // true --> show
+  public itsInitState: boolean = false; // false --> hide // true --> show
   public sumDealerCards: number = 0;
   public sumPlayerCards: number = 0;
 
 
-  private readonly CHECK_THE_VALUE_WIN: number = 21;
-  private readonly MAX_DEALER_SCORE: number = 15;
+  private readonly _CHECK_THE_VALUE_WIN: number = 21;
+  private readonly _MAX_DEALER_SCORE: number = 15;
 
   private _myDeck: number[] = [];
   private _deck: number[] = [6, 7, 8, 9, 10, 2, 3, 4, 11,
@@ -26,12 +26,10 @@ export class BlackJackComponent  {
 
 
   public startGame(): void {
-  console.log("in app")
     this._newDeck();
     this._resetResult();
     this.takeCard();
-    this.itsEnidState = true;
-
+    this.itsInitState = true;
   }
 
   public getHandSum(hand: number[]): number { // amount of nominal in hand
@@ -41,23 +39,22 @@ export class BlackJackComponent  {
     return sum;
   }
   public takeCard(): void { // take more & bust (player & dealer)
-    console.log('я попал в tekeCard')
     this.handPlayer.push(this._myDeck.pop());
     this.sumPlayerCards = this.getHandSum(this.handPlayer);
 
-    if (this.sumPlayerCards === this.CHECK_THE_VALUE_WIN) {
+    if (this.sumPlayerCards === this._CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
 
       return;
     }
 
-    if (this.sumPlayerCards > this.CHECK_THE_VALUE_WIN) {
+    if (this.sumPlayerCards > this._CHECK_THE_VALUE_WIN) {
       this._showResult('You Bust!!!');
 
       return;
     }
 
-    if (this.sumDealerCards <= this.MAX_DEALER_SCORE) {
+    if (this.sumDealerCards <= this._MAX_DEALER_SCORE) {
       this._takeDealer();
 
       return;
@@ -65,7 +62,6 @@ export class BlackJackComponent  {
   }
 
   public compareCard(): void {
-    console.log("сравниваю карты")
     if (this.sumPlayerCards === this.sumDealerCards) {
       this._showResult('Nobody');
 
@@ -107,7 +103,7 @@ export class BlackJackComponent  {
   private _takeDealer(): void {
     this.handDealer.push(this._myDeck.pop());
     this.sumDealerCards = this.getHandSum(this.handDealer);
-    if (this.sumDealerCards > this.CHECK_THE_VALUE_WIN) {
+    if (this.sumDealerCards > this._CHECK_THE_VALUE_WIN) {
       this._showResult(' Bust dealer!!! Dammit! ');
 
       return;
@@ -116,7 +112,6 @@ export class BlackJackComponent  {
 
   private _showResult(message: string): void {
     this.result = message;
-    this.itsEnidState = false;
+    this.itsInitState = false;
   }
-
 }

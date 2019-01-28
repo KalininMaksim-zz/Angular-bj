@@ -9,26 +9,26 @@ import { Component,Output, EventEmitter, Input } from '@angular/core';
 
 export class ScoreComponent {
 
-  @Output() emitStartGame: EventEmitter<void> = new EventEmitter();
-  @Output() emitTakeCard: EventEmitter<void> = new EventEmitter();
-  @Output() emitCompareCard: EventEmitter<void> = new EventEmitter();
+  @Output() public emitStartGame: EventEmitter<void> = new EventEmitter();
+  @Output() public emitTakeCard: EventEmitter<void> = new EventEmitter();
+  @Output() public emitCompareCard: EventEmitter<void> = new EventEmitter();
 
   @Input() public isShowButtons: boolean;
   @Input() public handPlayerInScore: number[];
   @Input() public sumDealerCardsInScore: number;
   @Input() public sumPlayerCardsInScore: number;
-  @Input() public handDealerInScore: number[]
+  @Input() public handDealerInScore: number[];
 
- 
+
  public startGameButtonClicked(): void {
   this.emitStartGame.emit();
  }
 
- public takeCardButtonCliked(): void {
+ public takeCardButtonClicked(): void {
   this.emitTakeCard.emit();
  }
 
- public compareCardCliked(): void {
+ public compareCardClicked(): void {
   this.emitCompareCard.emit();
  }
 }
