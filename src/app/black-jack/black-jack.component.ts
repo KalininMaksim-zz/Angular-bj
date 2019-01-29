@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './black-jack.component.html',
   styleUrls: ['./black-jack.component.css']
 })
-export class BlackJackComponent  {
+export class BlackJackComponent {
 
   public handPlayer: number[] = [];
   public handDealer: number[] = [];
@@ -34,13 +34,14 @@ export class BlackJackComponent  {
 
   public getHandSum(hand: number[]): number { // amount of nominal in hand
     let sum: number = 0;
-    hand.forEach(( item: number ) => sum += item);
+    hand.forEach((item: number) => sum += item);
 
     return sum;
   }
   public takeCard(): void { // take more & bust (player & dealer)
     this.handPlayer.push(this._myDeck.pop());
     this.sumPlayerCards = this.getHandSum(this.handPlayer);
+    this._getCardDealer();
 
     if (this.sumPlayerCards === this._CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
@@ -53,15 +54,16 @@ export class BlackJackComponent  {
 
       return;
     }
-
-    if (this.sumDealerCards <= this._MAX_DEALER_SCORE) {
-      this._takeDealer();
-
-      return;
-    }
   }
 
   public compareCard(): void {
+    this._takeDealer();
+    if (this.sumDealerCards > this._CHECK_THE_VALUE_WIN) {
+      this._showResult(' Bust dealer!!! Dammit! ');
+
+      return;
+    }
+
     if (this.sumPlayerCards === this.sumDealerCards) {
       this._showResult('Nobody');
 
@@ -81,7 +83,6 @@ export class BlackJackComponent  {
     }
   }
 
-
   private _newDeck(): void {
     if (this._myDeck.length !== 0) {
       this._myDeck = [...this._myDeck, ...this.handDealer, ...this.handPlayer];
@@ -100,18 +101,24 @@ export class BlackJackComponent  {
     this.result = `Let's play, a piece of meat?`;
   }
 
-  private _takeDealer(): void {
+  private _getCardDealer(): void {
     this.handDealer.push(this._myDeck.pop());
     this.sumDealerCards = this.getHandSum(this.handDealer);
-    if (this.sumDealerCards > this._CHECK_THE_VALUE_WIN) {
-      this._showResult(' Bust dealer!!! Dammit! ');
+  }
 
-      return;
+  private _takeDealer(): void {
+    while (this.sumDealerCards < this._MAX_DEALER_SCORE) {
+      this._getCardDealer();
+
+      if (this.sumDealerCards > this._CHECK_THE_VALUE_WIN) {
+        this.compareCard();
+      }
     }
   }
 
   private _showResult(message: string): void {
     this.result = message;
     this.itsInitState = false;
+
   }
 }
