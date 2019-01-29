@@ -4,17 +4,21 @@ import { Routes } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
 
 export const appRoutes: Routes = [
-  { path: '',
+  {
+    path: '',
     redirectTo: 'menu',
     pathMatch: 'full'
   },
-  { path: 'menu',
+  {
+    path: 'menu',
     component: MenuComponent
   },
-  { path: 'game',
+  {
+    path: 'game',
     component: BlackJackComponent
   },
-  { path: '**',
-  component: ErrorComponent
+  {
+    path: '**',
+    component: ErrorComponent
   }
 ];
