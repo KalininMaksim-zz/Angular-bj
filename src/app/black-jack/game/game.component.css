@@ -1,14 +1,14 @@
 .bender {
-  background: rgb(7, 190, 7); /* Цвет фона */
-  width: 1200px; /* Ширина блока */
-  height: 800px; /*высота блока*/
-  padding: 10px; /* Поля */
-  margin-top: 0; /* Отступ сверху */
-  border: 2px solid #000; /* Параметры рамки */
-  box-sizing: border-box; /* Ширина блока с полями */
+  background: rgb(7, 190, 7);
+  width: 1200px;
+  height: 800px;
+  padding: 10px;
+  margin-top: 0;
+  border: 2px solid #000;
+  box-sizing: border-box;
   background-image: url(../../../assets/bender.png);
   background-repeat: no-repeat;
-  background-position:0px 165px;
+  background-position:0 165px;
 }
 .result {
   display: flex;

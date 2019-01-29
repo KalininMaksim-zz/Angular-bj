@@ -119,6 +119,5 @@ export class BlackJackComponent {
   private _showResult(message: string): void {
     this.result = message;
     this.itsInitState = false;
-
   }
 }
