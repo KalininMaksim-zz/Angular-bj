@@ -41,12 +41,10 @@ export class BlackJackComponent {
   public takeCard(): void { // take more & bust (player & dealer)
     this.handPlayer.push(this._myDeck.pop());
     this.sumPlayerCards = this.getHandSum(this.handPlayer);
-    this._getCardDealer();
-
     if (this.sumPlayerCards === this._CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
 
-      return;
+     return;
     }
 
     if (this.sumPlayerCards > this._CHECK_THE_VALUE_WIN) {
@@ -54,10 +52,12 @@ export class BlackJackComponent {
 
       return;
     }
+    this._getCardDealer();
   }
 
   public compareCard(): void {
     this._takeDealer();
+
     if (this.sumDealerCards > this._CHECK_THE_VALUE_WIN) {
       this._showResult(' Bust dealer!!! Dammit! ');
 
