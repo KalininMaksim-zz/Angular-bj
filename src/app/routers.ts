@@ -1,6 +1,7 @@
+import { Routes } from '@angular/router';
+
 import { BlackJackComponent } from './black-jack/black-jack.component';
 import { ErrorComponent } from './error/error.component';
-import { Routes } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
 
 export const appRoutes: Routes = [

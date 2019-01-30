@@ -5,7 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.css']
 })
-export class ErrorComponent {
-
-
-}
+export class ErrorComponent {}

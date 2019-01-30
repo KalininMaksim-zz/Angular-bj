@@ -10,6 +10,7 @@
   background-repeat: no-repeat;
   background-position:0 165px;
 }
+
 .result {
   display: flex;
   flex-direction: row;

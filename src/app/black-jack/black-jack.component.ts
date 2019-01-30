@@ -38,9 +38,11 @@ export class BlackJackComponent {
 
     return sum;
   }
+
   public takeCard(): void { // take more & bust (player & dealer)
     this.handPlayer.push(this._myDeck.pop());
     this.sumPlayerCards = this.getHandSum(this.handPlayer);
+
     if (this.sumPlayerCards === this._CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
 
@@ -52,6 +54,7 @@ export class BlackJackComponent {
 
       return;
     }
+
     this._getCardDealer();
   }
 
@@ -90,6 +93,7 @@ export class BlackJackComponent {
 
       return;
     }
+
     this._myDeck = this._deck.sort(() => .5 - Math.random());
   }
 
