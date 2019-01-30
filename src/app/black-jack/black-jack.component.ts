@@ -23,13 +23,12 @@ export class BlackJackComponent {
 
   public constructor(private gameService: GameService) {}
 
-
   public startGame(): void {
     this._myDeck = this.gameService.generateDeck();
     this._resetResult();
     this.takeCard();
     this.itsInitState = true;
-    }
+  }
 
 
   public takeCard(): void { // take more & bust (player & dealer)
