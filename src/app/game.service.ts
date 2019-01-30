@@ -5,14 +5,14 @@ import { Injectable } from '@angular/core';
 })
 export class GameService {
 
-  public deck: number[] = [6, 7, 8, 9, 10, 2, 3, 4, 11,
+  private readonly DECK: number[] = [6, 7, 8, 9, 10, 2, 3, 4, 11,
     6, 7, 8, 9, 10, 2, 3, 4, 11,
     6, 7, 8, 9, 10, 2, 3, 4, 11,
     6, 7, 8, 9, 10, 2, 3, 4, 11];
 
 
   public generateDeck(): number[] {
-    return this.deck.sort(() => .5 - Math.random());
+    return this.DECK.sort(() => .5 - Math.random());
   }
 
   public getHandSum(hand: number[]): number { // amount of nominal in hand

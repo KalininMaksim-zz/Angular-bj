@@ -14,14 +14,16 @@ export class BlackJackComponent {
   public itsInitState: boolean = false; // false --> hide // true --> show
   public sumDealerCards: number = 0;
   public sumPlayerCards: number = 0;
-  public _myDeck: number[] = [];
+
+
+  private _myDeck: number[] = [];
 
 
   private readonly _CHECK_THE_VALUE_WIN: number = 21;
   private readonly _MAX_DEALER_SCORE: number = 15;
 
 
-  public constructor(private gameService: GameService) {}
+  public constructor(private gameService: GameService) { }
 
   public startGame(): void {
     this._myDeck = this.gameService.generateDeck();
