@@ -9,6 +9,7 @@ import { ErrorComponent } from './error/error.component';
 import { GameComponent } from '../app/black-jack/game/game.component';
 import { MenuComponent } from './menu/menu.component';
 import { ScoreComponent } from '../app/black-jack/score/score.component';
+import { GameService } from './game.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { ScoreComponent } from '../app/black-jack/score/score.component';
     BrowserModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

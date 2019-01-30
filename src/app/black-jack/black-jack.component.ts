@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-black-jack',
@@ -13,35 +14,27 @@ export class BlackJackComponent {
   public itsInitState: boolean = false; // false --> hide // true --> show
   public sumDealerCards: number = 0;
   public sumPlayerCards: number = 0;
+  public _myDeck: number[] = [];
 
 
   private readonly _CHECK_THE_VALUE_WIN: number = 21;
   private readonly _MAX_DEALER_SCORE: number = 15;
 
-  private _myDeck: number[] = [];
-  private _deck: number[] = [6, 7, 8, 9, 10, 2, 3, 4, 11,
-    6, 7, 8, 9, 10, 2, 3, 4, 11,
-    6, 7, 8, 9, 10, 2, 3, 4, 11,
-    6, 7, 8, 9, 10, 2, 3, 4, 11];
+
+  public constructor(private gameService: GameService) {}
 
 
   public startGame(): void {
-    this._newDeck();
+    this._myDeck = this.gameService.generateDeck();
     this._resetResult();
     this.takeCard();
     this.itsInitState = true;
-  }
+    }
 
-  public getHandSum(hand: number[]): number { // amount of nominal in hand
-    let sum: number = 0;
-    hand.forEach((item: number) => sum += item);
-
-    return sum;
-  }
 
   public takeCard(): void { // take more & bust (player & dealer)
     this.handPlayer.push(this._myDeck.pop());
-    this.sumPlayerCards = this.getHandSum(this.handPlayer);
+    this.sumPlayerCards = this.gameService.getHandSum(this.handPlayer);
 
     if (this.sumPlayerCards === this._CHECK_THE_VALUE_WIN) {
       this._showResult('You Win!!!');
@@ -86,17 +79,6 @@ export class BlackJackComponent {
     }
   }
 
-  private _newDeck(): void {
-    if (this._myDeck.length !== 0) {
-      this._myDeck = [...this._myDeck, ...this.handDealer, ...this.handPlayer];
-      this._myDeck.sort(() => .5 - Math.random());
-
-      return;
-    }
-
-    this._myDeck = this._deck.sort(() => .5 - Math.random());
-  }
-
   private _resetResult(): void {
     this.sumDealerCards = 0;
     this.sumPlayerCards = 0;
@@ -107,7 +89,7 @@ export class BlackJackComponent {
 
   private _getCardDealer(): void {
     this.handDealer.push(this._myDeck.pop());
-    this.sumDealerCards = this.getHandSum(this.handDealer);
+    this.sumDealerCards = this.gameService.getHandSum(this.handDealer);
   }
 
   private _takeDealer(): void {
