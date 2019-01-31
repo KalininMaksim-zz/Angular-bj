@@ -23,7 +23,9 @@ export class BlackJackComponent {
   private readonly _MAX_DEALER_SCORE: number = 15;
 
 
-  public constructor(private gameService: GameService) { }
+  public constructor(
+    private gameService: GameService
+  ) { }
 
   public startGame(): void {
     this._myDeck = this.gameService.generateDeck();
