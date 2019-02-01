@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { GameService } from '../game.service';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-black-jack',
@@ -7,6 +9,8 @@ import { GameService } from '../game.service';
   styleUrls: ['./black-jack.component.css']
 })
 export class BlackJackComponent {
+
+ public items: Observable<any[]>;
 
   public handPlayer: number[] = [];
   public handDealer: number[] = [];
@@ -24,8 +28,14 @@ export class BlackJackComponent {
 
 
   public constructor(
-    private gameService: GameService
-  ) { }
+    private gameService: GameService,
+    public db: AngularFireDatabase
+  ) { this.items = db.list('items').valueChanges(); }
+
+  public onSubmit(){
+     return this.db.list('/items').push({ content: 5 });
+
+  }
 
   public startGame(): void {
     this._myDeck = this.gameService.generateDeck();
