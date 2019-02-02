@@ -15,6 +15,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { environment } from '../environments/environment';
 import { DataBaseService } from './data-base.service';
+import { MultiplayerComponent } from './multiplayer/multiplayer.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DataBaseService } from './data-base.service';
     ErrorComponent,
     GameComponent,
     MenuComponent,
-    ScoreComponent
+    ScoreComponent,
+    MultiplayerComponent
   ],
   imports: [
     BrowserModule,

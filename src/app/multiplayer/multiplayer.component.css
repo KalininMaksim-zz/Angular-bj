@@ -1,0 +1,29 @@
+.wrapper {
+  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+button{
+  padding: 10px 0 10px 0;
+}
+.rooms {
+  border: 4px solid black;
+  background-color: antiquewhite;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+.room-container {
+  border: 4px solid black;
+  background-color: blue;
+  display: flex;
+  height: 120px;
+  width: 120px;
+  margin: 0 10px 10px 0;
+}
+.room {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}

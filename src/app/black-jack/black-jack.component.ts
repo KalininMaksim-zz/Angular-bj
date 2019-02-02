@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GameService } from '../game.service';
-import { DataBaseService } from '../data-base.service';
+
 
 @Component({
   selector: 'app-black-jack',
@@ -25,13 +25,8 @@ export class BlackJackComponent {
   private readonly _MAX_DEALER_SCORE: number = 15;
 
 
-  public constructor(
-    private gameService: GameService,
-    private dataBase: DataBaseService
-  ) {
-    dataBase.getObserv().subscribe((itemsFromDb: []) => {
-      console.log(itemsFromDb);
-    });
+  public constructor(private gameService: GameService) {
+
   }
 
   public startGame(): void {

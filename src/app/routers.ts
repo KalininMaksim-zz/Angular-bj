@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { BlackJackComponent } from './black-jack/black-jack.component';
 import { ErrorComponent } from './error/error.component';
 import { MenuComponent } from './menu/menu.component';
+import { MultiplayerComponent } from './multiplayer/multiplayer.component';
 
 export const appRoutes: Routes = [
   {
@@ -17,6 +18,10 @@ export const appRoutes: Routes = [
   {
     path: 'game',
     component: BlackJackComponent
+  },
+  {
+    path: 'multiplayer',
+    component: MultiplayerComponent
   },
   {
     path: '**',
