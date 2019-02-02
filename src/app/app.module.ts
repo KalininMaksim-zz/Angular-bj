@@ -14,6 +14,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { environment } from '../environments/environment';
+import { DataBaseService } from './data-base.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { environment } from '../environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule, // for database
   ],
-  providers: [GameService],
+  providers: [
+    GameService,
+    DataBaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

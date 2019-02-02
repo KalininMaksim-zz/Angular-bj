@@ -1,8 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
 export class GameService {
 
   private readonly _DECK: number[] = [6, 7, 8, 9, 10, 2, 3, 4, 11,
