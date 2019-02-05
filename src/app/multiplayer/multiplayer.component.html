@@ -7,13 +7,16 @@
   <button (click)="addRoom()">
     Add rooms
   </button>
+
 </div>
 
 <div class="rooms">
+
   <div class="room-container"
     *ngFor="let room of rooms" >
 
     <div class="room">
+
       <div>
         {{room.name}}
       </div>
@@ -21,6 +24,14 @@
       <div>
         {{room.value}}
       </div>
+
+      <div>
+        {{room.id}}
+      </div>
+
+      <button (click)="deleteRoom(room.id)">
+        del
+      </button>
     </div>
   </div>
 </div>

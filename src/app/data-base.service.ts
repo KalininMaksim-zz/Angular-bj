@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class DataBaseService {
 
   public rooms: Observable<any[]>;
-  public  a = 4;
+
 
  public constructor(public db: AngularFireDatabase) {
 
@@ -17,7 +17,14 @@ export class DataBaseService {
    return this.db.list('rooms').valueChanges();
  }
 
-  public addRoom(id: number) {
+  public addRoom(id: number): void {
+
     this.db.list(`rooms`).update( `room ${id}`, { name: 'Vasya', value: 3455, id});
   }
+
+  public deleteRoom(id: number): void {
+    this.db.list(`rooms`).remove(`room ${id}`);
+
+  }
 }
+
