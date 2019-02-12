@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { appRoutes } from './routers';
@@ -16,6 +17,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 import { DataBaseService } from './data-base.service';
 import { MultiplayerComponent } from './multiplayer/multiplayer.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -25,13 +27,15 @@ import { MultiplayerComponent } from './multiplayer/multiplayer.component';
     GameComponent,
     MenuComponent,
     ScoreComponent,
-    MultiplayerComponent
+    MultiplayerComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule, // for database
+    FormsModule
   ],
   providers: [
     GameService,

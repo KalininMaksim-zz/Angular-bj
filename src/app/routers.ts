@@ -4,6 +4,7 @@ import { BlackJackComponent } from './black-jack/black-jack.component';
 import { ErrorComponent } from './error/error.component';
 import { MenuComponent } from './menu/menu.component';
 import { MultiplayerComponent } from './multiplayer/multiplayer.component';
+import { TableComponent } from './table/table.component';
 
 export const appRoutes: Routes = [
   {
@@ -22,6 +23,10 @@ export const appRoutes: Routes = [
   {
     path: 'multiplayer',
     component: MultiplayerComponent
+  },
+  {
+    path: 'multiplayer/:id',
+    component: TableComponent
   },
   {
     path: '**',

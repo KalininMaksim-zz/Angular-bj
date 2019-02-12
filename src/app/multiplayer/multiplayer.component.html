@@ -7,7 +7,7 @@
   <button (click)="addRoom()">
     Add rooms
   </button>
-
+  <input type="text" [(ngModel)]="player.name">
 </div>
 
 <div class="rooms">
@@ -17,20 +17,22 @@
 
     <div class="room">
 
-      <div>
-        {{room.name}}
-      </div>
 
       <div>
-        {{room.value}}
-      </div>
-
-      <div>
-        {{room.id}}
+        Table# {{room.id}}
       </div>
 
       <button (click)="deleteRoom(room.id)">
         del
+      </button>
+      <br>
+
+      <button [routerLink]="room.id">
+        Enter in room
+      </button>
+
+      <button  (click)="addPlayers(room.id)">
+        add player
       </button>
     </div>
   </div>
