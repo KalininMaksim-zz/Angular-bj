@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataBaseService } from '../data-base.service';
 import { GameService } from '../game.service';
+import * as faker from 'faker';
 
 @Component({
   selector: 'app-multiplayer',
@@ -13,9 +14,10 @@ export class MultiplayerComponent implements OnInit, OnDestroy {
   public rooms: [] = [];
   public newId: number = 0;
   public deck: number[];
-  public player: TPlayer = {
+  public locSorId: string = 'id';
+  public locSorName: string = 'name'
+  public player = {
     name: '',
-    card: [],
     sumCards: 0,
     id: 1,
     roomMaster: false,
@@ -45,6 +47,7 @@ public constructor(
     this.deck = this._gameService.generateDeck();
     this._dataBase.addRoom(this.newId, this.deck);
    console.log(this.deck);
+
   }
 
   public deleteRoom(id: number): void {
@@ -53,12 +56,20 @@ public constructor(
 
   public addPlayers(idRoom: number): void {
     this.player.id = Math.floor(new Date().getTime() / 1000);
+    // @ts-ignore
+    faker.locale = 'ru';
+    if ( this.player.name === '' || this.player.name === undefined) {
+      this.player.name = faker.fake('{{name.firstName}}');
+    }
     this._dataBase.addPlayers(idRoom, this.player.name, this.player.id);
-   localStorage.setItem(String(this.player.id), this.player.name);
+
+   localStorage.setItem(this.locSorId, String(this.player.id));
+   localStorage.setItem(this.locSorName, this.player.name);
     this.player.name = '';
   }
 
   public ngOnDestroy(): void {
+
   this._subscription$$.unsubscribe();
   }
 }

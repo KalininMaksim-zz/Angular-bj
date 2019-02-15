@@ -23,17 +23,27 @@ export class DataBaseService {
  }
 
   public addRoom(id: number, deck: number[]): void {
-
     this.db.list(`rooms`).update( `room ${id}`, {id, 'deck': deck});
   }
 
   public deleteRoom(id: number): void {
     this.db.list(`rooms`).remove(`room ${id}`);
-
   }
 
   public addPlayers(id: number, name: string, idPlayer: number): void {
-    this.db.object(`rooms/room ${id}/players/player ${idPlayer}`).update({id: idPlayer, name, card: [0], sumCards: 0, roomMaster: false, state: true });
+    this.db.object(`rooms/room ${id}/players/player ${idPlayer}`).update({id: idPlayer, name, sumCards: 0, roomMaster: false, state: true });
+  }
+
+  public upDateRoom (idRoom: number, idPlayer: number, cards: number, sumCards: number): void {
+   this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({cards, sumCards});
+  }
+
+  public upDateDeck(idRoom: number, deck: number[]): void {
+   this.db.object(`rooms/room ${idRoom}`).update({deck});
+  }
+
+  public upDatePlayer(idRoom: number, idPlayer: number, cards: number[]): void {
+    this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({cards});
   }
 }
 

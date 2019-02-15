@@ -1,11 +1,12 @@
 type TPlayer = { name: string;
-    card: number[];
+    cards?: number[];
     sumCards: number;
     id: number;
     roomMaster: boolean;
     state: boolean};
 
-type Troom ={
+type Troom = {
+  deck: number[],
   id: number,
-  players: {}[]
+  players: TPlayer,
 };

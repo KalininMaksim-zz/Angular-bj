@@ -22,16 +22,20 @@
         Table# {{room.id}}
       </div>
 
+      <div>
+        Lorem ipsum dolor sit amet.
+      </div>
+
       <button (click)="deleteRoom(room.id)">
         del
       </button>
       <br>
 
-      <button [routerLink]="room.id">
+      <button [routerLink]="room.id" >
         Enter in room
       </button>
 
-      <button  (click)="addPlayers(room.id)">
+      <button  (click)="addPlayers(room.id)" >
         add player
       </button>
     </div>
