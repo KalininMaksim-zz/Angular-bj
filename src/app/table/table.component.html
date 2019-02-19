@@ -24,14 +24,19 @@
   </span><br>
 </div>
 
-
-  <button (click)="takeCard()" >
+  <div *ngIf="!player.stopCard">
+  <button (click)="takeCard()" [disabled]="!player.myTurn">
     Take card
   </button>
 
-  <button (click)="checkWin()" >
-    Check winner
+  <button (click)="stopTakeCard()" >
+    Stop take card
   </button><br>
+
+  
+
+</div>
+<button (click)=restart()>restart</button>
 </div>
 
 

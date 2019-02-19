@@ -3,7 +3,7 @@ type TPlayer = { name: string;
     sumCards: number;
     id: number;
     roomMaster: boolean;
-    state: boolean};
+    myTurn: boolean};
 
 type Troom = {
   deck: number[],

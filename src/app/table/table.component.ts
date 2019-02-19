@@ -22,7 +22,9 @@ export class TableComponent implements OnInit, OnDestroy {
   public playersArray = [];
   public deck: number[];
   public result: string = ``;
-  public idFromLocalStorage: number;
+
+  private _idFromLocalStorage: number;
+  private _count: number = 0;
 
 
   public constructor(
@@ -54,30 +56,72 @@ export class TableComponent implements OnInit, OnDestroy {
 
   public startGame(): void {
     this.playersArray[0].roomMaster = true;
+    this.playersArray[0].myTurn = true;
 
     this.playersArray.forEach((player) => {
-      console.table(this.playersArray);
+      // console.table(this.playersArray);
       player.cards = 0;
       player.cards = Object.values(player.cards);
       player.cards.push(this.room.deck.pop());
-    this._dataBase.upDatePlayer(this.roomId, player.id, player.cards);
-    this._dataBase.upDateDeck(this.roomId, this.room.deck);
+      this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+      this._dataBase.upDateDeck(this.roomId, this.room.deck);
     });
   }
 
   public takeCard(): void {
-    this.playersArray.forEach((player) => {
-      this.idFromLocalStorage = +localStorage.getItem('id');
-      console.log(this.idFromLocalStorage);
-      console.log(player.id);
-      if (this.idFromLocalStorage === player.id) {
-        player.cards.push(this.room.deck.pop());
+    this.playersArray.forEach((player, index: number) => {
+      this._idFromLocalStorage = +localStorage.getItem('id');
+      // console.log(this._idFromLocalStorage);
+      // console.log(player.id);
+      // console.log(this._count + '<--- count');
+      if (this._idFromLocalStorage === player.id && player.stopCard !== true) {
+        this._count = index;
+        player.myTurn = false;
 
+        player.cards.push(this.room.deck.pop());
         player.sumCards = this.gameService.getHandSum(player.cards);
         this._dataBase.upDateDeck(this.roomId, this.room.deck);
-        this._dataBase.upDateRoom(this.roomId, player.id, player.cards, player.sumCards);
+        this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+        // this._dataBase.upDateRoom(this.roomId, player.id, player.cards, player.sumCards);
       }
-      });
+    });
+    this.passTurn();
+    if ( this.playersArray[this._count].stopCard === true || this.playersArray[this._count].myTurn === false ) {
+      this.passTurn();
+    }
+  }
+  public passTurn(): void {
+    // console.log('передал ход');
+    this._count++;
+    if (this.playersArray.length <= this._count) {
+      this._count = 0;
+    }
+    this._dataBase.upDatePlayer(this.roomId, this.playersArray[this._count].id, this.playersArray[this._count].cards, this.playersArray[this._count].roomMaster, this.playersArray[this._count].myTurn = true, this.playersArray[this._count].sumCards, this.playersArray[this._count].stopCard );
+  }
+
+  public stopTakeCard(): void {
+    this.playersArray.forEach((player, index) => {
+      if (this._idFromLocalStorage === player.id) {
+        this._count = index;
+        player.stopCard = true;
+        player.myTurn = false;
+        // console.log(player);
+        // console.log(player.stopCard);
+        this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+      }
+    });
+    this.passTurn();
+    const checkWin: boolean = this.playersArray.every((player) => player.stopCard === true);
+    console.log(checkWin);
+    if (checkWin === true) {
+      this.checkWin();
+    }
+    // this.playersArray.forEach(( player ) => {
+    //   // this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+    //   if ( player.stopCard === checkWin) {
+    //     this.checkWin();
+    //   }
+    // });
   }
 
   public checkWin(): void {
@@ -92,7 +136,7 @@ export class TableComponent implements OnInit, OnDestroy {
       if (player.sumCards > this._WIN_STATE) {
         this.result = `${player.name} lose :(`;
         alert(this.result);
-        this.chek();
+        this.restart();
 
         return;
       }
@@ -100,7 +144,7 @@ export class TableComponent implements OnInit, OnDestroy {
       if ( player.sumCards === winner) {
         this.result = `${player.name} winner!!!`;
         alert(this.result);
-        this.chek();
+        this.restart();
 
         return;
       }
@@ -108,12 +152,15 @@ export class TableComponent implements OnInit, OnDestroy {
 
   }
 
-  public chek() {
-    console.log('11')
+  public restart(): void {
+    // console.log('restart')
     this.playersArray.forEach((player) => {
       player.sumCards = 0;
       player.cards = [];
-      this._dataBase.upDateRoom(this.room.id, player.id, player.cards, player.sumCards);
+      player.stopCard = false;
+      player.myTurn = false;
+      this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+      // this._dataBase.upDateRoom(this.room.id, player.id, player.cards, player.sumCards);
       this.room.deck = this.gameService.generateDeck();
       this._dataBase.upDateDeck(this.room.id, this.room.deck);
 
