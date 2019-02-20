@@ -6,7 +6,7 @@
   {{roomId}}
 </div><br>
 
-<button (click)="startGame()">
+<button *ngIf="this.isInitStaite" (click)="startGame()">
   start game
 </button>
 
@@ -29,7 +29,7 @@
     Take card
   </button>
 
-  <button (click)="stopTakeCard()" >
+  <button (click)="stopTakeCard()" [disabled]="!player.myTurn">
     Stop take card
   </button><br>
 

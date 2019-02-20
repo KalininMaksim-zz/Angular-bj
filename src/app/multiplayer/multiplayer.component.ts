@@ -15,7 +15,8 @@ export class MultiplayerComponent implements OnInit, OnDestroy {
   public newId: number = 0;
   public deck: number[];
   public locSorId: string = 'id';
-  public locSorName: string = 'name'
+  public locSorName: string = 'name';
+  public isInitStaite: boolean = true;
   public player = {
     name: '',
     sumCards: 0,
@@ -45,7 +46,7 @@ public constructor(
 
   public addRoom(): void {
     this.deck = this._gameService.generateDeck();
-    this._dataBase.addRoom(this.newId, this.deck);
+    this._dataBase.addRoom(this.newId, this.deck, this.isInitStaite);
    console.log(this.deck);
 
   }

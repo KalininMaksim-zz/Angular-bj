@@ -22,21 +22,24 @@ export class DataBaseService {
    return this.db.object(`rooms/room ${id}`).valueChanges();
  }
 
-  public addRoom(id: number, deck: number[]): void {
-    this.db.list(`rooms`).update( `room ${id}`, {id, 'deck': deck});
+  public addRoom(id: number, deck: number[], isInitStaite: boolean): void {
+    this.db.list(`rooms`).update( `room ${id}`, {id, 'deck': deck, isInitStaite});
   }
 
   public deleteRoom(id: number): void {
     this.db.list(`rooms`).remove(`room ${id}`);
+  }
+  public changeStateRoom(id: number, isInitStaite: boolean): void {
+    this.db.list(`rooms`).update(`room ${id}`, {isInitStaite});
   }
 
   public addPlayers(id: number, name: string, idPlayer: number): void {
     this.db.object(`rooms/room ${id}/players/player ${idPlayer}`).update({id: idPlayer, name, sumCards: 0, roomMaster: false, myTurn: false, stopCard: false });
   }
 
-  public upDateRoom (idRoom: number, idPlayer: number, cards: number, sumCards: number): void {
-   this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({cards, sumCards});
-  }
+  // public upDateRoom (idRoom: number, idPlayer: number, cards: number, sumCards: number): void {
+  //  this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({cards, sumCards});
+  // }////////// TODO: надо разобраться надо мне этот метод или нетю Или переписать
 
   public upDateDeck(idRoom: number, deck: number[]): void {
    this.db.object(`rooms/room ${idRoom}`).update({deck});

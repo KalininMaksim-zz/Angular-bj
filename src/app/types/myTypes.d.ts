@@ -9,4 +9,5 @@ type Troom = {
   deck: number[],
   id: number,
   players: TPlayer,
+  isInitStaite: boolean
 };
