@@ -1,0 +1,24 @@
+.wrapper-table {
+
+  display: flex;
+  justify-content: center;
+}
+.player { 
+  background-color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 0 solid black;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 5px;
+}
+.btn {
+  margin: 5px;
+}
+.wrapper-navigate {
+  display: flex;
+  justify-content: center;
+}
+.wrapper-result {
+  display: flex;
+  justify-content: center;
+}

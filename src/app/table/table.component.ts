@@ -22,7 +22,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public playersArray = [];
   public deck: number[];
   public result: string = ``;
-  public isInitStaite;
+  public isInitStaite: boolean;
 
 
   private _idFromLocalStorage: number;
@@ -87,6 +87,10 @@ export class TableComponent implements OnInit, OnDestroy {
         player.sumCards = this.gameService.getHandSum(player.cards);
         this._dataBase.upDateDeck(this.roomId, this.room.deck);
         this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+        // console.log(player.sumCards);
+        if (player.sumCards >= this._WIN_STATE) {
+          this.stopTakeCard();
+        }
         // this._dataBase.upDateRoom(this.roomId, player.id, player.cards, player.sumCards);
       }
     });
@@ -129,37 +133,30 @@ export class TableComponent implements OnInit, OnDestroy {
     // });
   }
 
-  // public checkWin(): void {
-  //   let winner: number = 0;
-  //   this.playersArray.forEach((player) => {
-  //     if ( player.sumCards > winner && winner < this._WIN_STATE) {
-  //       winner = player.sumCards;
-  //     }
-  //   });
+  public checkWin(): void {
+    let winner: number = 0;
+    this.playersArray.forEach((player) => {
+      if (player.sumCards > winner && winner < this._WIN_STATE) {
+        winner = player.sumCards;
+      }
+    });
 
-  //   this.playersArray.forEach((player) => {
-  //     if (player.sumCards > this._WIN_STATE) {
-  //       this.result = `${player.name} lose :(`;
-  //       alert(this.result);
-  //       this.restart();
+    this.playersArray.forEach((player) => {
+      if (player.sumCards === winner) {
+        this.result = `${player.name} winner!!!`;
+        alert(this.result);
+        // this.restart();
 
-  //       return;
-  //     }
+        return;
+      }
+    });
 
-  //     if ( player.sumCards === winner) {
-  //       this.result = `${player.name} winner!!!`;
-  //       alert(this.result);
-  //       this.restart();
-
-  //       return;
-  //     }
-  //   });
-
-  // }
+  }
 
   public restart(): void {
     // console.log('restart')
     this.isInitStaite = true;
+    this.result = ``;
     this._dataBase.changeStateRoom(this.roomId, this.isInitStaite);
     this.playersArray.forEach((player) => {
       player.sumCards = 0;
@@ -212,18 +209,18 @@ export class TableComponent implements OnInit, OnDestroy {
   //
   // }
 
-  public checkWin(): void {
-    const winArr: [] = this.playersArray.reduce((prev, current) => {
-      console.log(prev);
-      console.log(current);
-      if (current.sumCards <= this._WIN_STATE && current.sumCards > prev.sumCards) {  
-       return [...prev, current.name];
-      }
-      return prev;
-    }, []);
-    console.log(winArr);
-    alert('Отработал')
-  }
+  // public checkWin(): void {
+  //   const winArr: [] = this.playersArray.reduce((prev, current) => {
+  //     console.log(prev);
+  //     console.log(current);
+  //     if (current.sumCards <= this._WIN_STATE && current.sumCards > prev.sumCards) {  
+  //      return [...prev, current.name];
+  //     }
+  //     return prev;
+  //   }, []);
+  //   console.log(winArr);
+  //   alert('Отработал')
+  // }
 
   public  ngOnDestroy(): void {
     this._subscription$$.unsubscribe();

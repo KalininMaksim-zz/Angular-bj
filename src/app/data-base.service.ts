@@ -48,5 +48,9 @@ export class DataBaseService {
   public upDatePlayer(idRoom: number, idPlayer: number, cards: number[], roomMaster: boolean, myTurn: boolean, sumCards: number, stopCard: boolean): void {
     this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({cards, roomMaster, myTurn, sumCards, stopCard});
   }
+
+  public UpDateTurnPlayer(idRoom: number, idPlayer: number, myTurn: boolean) {
+    this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({myTurn});
+  }
 }
 

@@ -1,43 +1,56 @@
-<p>
-  table works!
-
-</p>
-<div>
-  {{roomId}}
-</div><br>
-
-<button *ngIf="this.isInitStaite" (click)="startGame()">
-  start game
-</button>
-
-<div *ngFor="let player of playersArray " >
-  <div>
-    {{player.name}}
-  </div>
-
-  <div>
-    sum in hand {{player.sumCards}}
-  </div>
-<div> card
-    <span *ngFor="let card of player.cards">
-    | {{ card }} |
-  </span><br>
-</div>
-
-  <div *ngIf="!player.stopCard">
-  <button (click)="takeCard()" [disabled]="!player.myTurn">
-    Take card
+<div class="wrapper-navigate">
+  <button class="btn"
+          *ngIf="this.isInitStaite"
+          (click)="startGame()">
+   start game
   </button>
 
-  <button (click)="stopTakeCard()" [disabled]="!player.myTurn">
-    Stop take card
-  </button><br>
-
-  
-
-</div>
-<button (click)=restart()>restart</button>
+  <button class="btn"
+          (click)=restart()>
+   restart</button>
 </div>
 
+<div class="wrapper-result">
+  {{ result }}
+</div>
 
+<div class="wrapper-table">
+  <div class="player"
+       *ngFor="let player of playersArray ">
 
+    <div>
+      {{player.name}}
+    </div>
+
+    <div>
+      sum in hand
+      <span *ngIf="player.stopCard">
+        {{player.sumCards}}
+      </span>
+    </div>
+
+    <div>
+       card
+      <span *ngFor="let card of player.cards">
+          ⎣<span *ngIf="player.stopCard">{{ card }}</span>⎤
+      </span>
+      <br>
+    </div>
+
+    <div *ngIf="!player.stopCard">
+      <button class="btn"
+              (click)="takeCard()"
+              [disabled]="!player.myTurn">
+        Take card
+      </button>
+      <br>
+
+      <button class="btn"
+              (click)="stopTakeCard()"
+              [disabled]="!player.myTurn">
+        Stop take card
+      </button>
+      <br>
+    </div>
+  </div>
+</div>
