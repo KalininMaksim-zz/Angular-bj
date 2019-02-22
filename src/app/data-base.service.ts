@@ -14,27 +14,32 @@ export class DataBaseService {
 
   }
 
- public getObserv(): Observable<{}[]> {
-   return this.db.list('rooms').valueChanges();
- }
+  public getObserv(): Observable<{}[]> {
+    return this.db.list('rooms').valueChanges();
+  }
 
- public getRoom(id: number): Observable<{}> {
-   return this.db.object(`rooms/room ${id}`).valueChanges();
- }
+  public getRoom(id: number): Observable<{}> {
+    return this.db.object(`rooms/room ${id}`).valueChanges();
+  }
 
-  public addRoom(id: number, deck: number[], isInitStaite: boolean): void {
-    this.db.list(`rooms`).update( `room ${id}`, {id, 'deck': deck, isInitStaite});
+  public addRoom(id: number, deck: number[], isInitStaite: boolean, result: string): void {
+    this.db.list(`rooms`).update(`room ${id}`, { id, 'deck': deck, isInitStaite, result });
   }
 
   public deleteRoom(id: number): void {
     this.db.list(`rooms`).remove(`room ${id}`);
   }
+
   public changeStateRoom(id: number, isInitStaite: boolean): void {
-    this.db.list(`rooms`).update(`room ${id}`, {isInitStaite});
+    this.db.list(`rooms`).update(`room ${id}`, { isInitStaite });
+  }
+
+  public upDateResult(idRoom: number, result: string): void {
+    this.db.list(`rooms`).update(`room ${idRoom}`, {result});
   }
 
   public addPlayers(id: number, name: string, idPlayer: number): void {
-    this.db.object(`rooms/room ${id}/players/player ${idPlayer}`).update({id: idPlayer, name, sumCards: 0, roomMaster: false, myTurn: false, stopCard: false });
+    this.db.object(`rooms/room ${id}/players/player ${idPlayer}`).set({ id: idPlayer, name, sumCards: 0, roomMaster: false, myTurn: false, stopCard: false });
   }
 
   // public upDateRoom (idRoom: number, idPlayer: number, cards: number, sumCards: number): void {
@@ -49,7 +54,7 @@ export class DataBaseService {
     this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({cards, roomMaster, myTurn, sumCards, stopCard});
   }
 
-  public UpDateTurnPlayer(idRoom: number, idPlayer: number, myTurn: boolean) {
+  public upDateTurnPlayer(idRoom: number, idPlayer: number, myTurn: boolean): void {
     this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({myTurn});
   }
 }

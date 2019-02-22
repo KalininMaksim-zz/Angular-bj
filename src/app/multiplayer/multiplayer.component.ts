@@ -46,7 +46,7 @@ public constructor(
 
   public addRoom(): void {
     this.deck = this._gameService.generateDeck();
-    this._dataBase.addRoom(this.newId, this.deck, this.isInitStaite);
+    this._dataBase.addRoom(this.newId, this.deck, this.isInitStaite, ``);
    console.log(this.deck);
 
   }
