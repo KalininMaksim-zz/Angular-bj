@@ -42,6 +42,9 @@ export class DataBaseService {
     this.db.object(`rooms/room ${id}/players/player ${idPlayer}`).set({ id: idPlayer, name, sumCards: 0, roomMaster: false, myTurn: false, stopCard: false });
   }
 
+  public upDteToggle(idRoom: number, showCards: boolean): void {
+    this.db.list(`rooms`).update(`room ${idRoom}`, {showCards});
+  }
   // public upDateRoom (idRoom: number, idPlayer: number, cards: number, sumCards: number): void {
   //  this.db.object(`rooms/room ${idRoom}/players/player ${idPlayer}`).update({cards, sumCards});
   // }////////// TODO: надо разобраться надо мне этот метод или нетю Или переписать

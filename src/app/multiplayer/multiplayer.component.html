@@ -25,17 +25,18 @@
     
 
       <button (click)="deleteRoom(room.id)">
-        del
+        Delete room
       </button>
       <br>
 
-      <button [routerLink]="room.id" >
+      <button [routerLink]="room.id" 
+              (click)="addPlayers(room.id)">
         Enter in room
       </button>
-
+<!-- 
       <button  (click)="addPlayers(room.id)" >
         add player
-      </button>
+      </button> -->
     </div>
   </div>
 </div>
