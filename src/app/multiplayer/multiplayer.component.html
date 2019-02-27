@@ -1,42 +1,39 @@
 
 <div class="wrapper">
   <a
-    routerLink="/menu">return to main menu
+    routerLink="/menu">
+    return to main menu
   </a>
 
   <button (click)="addRoom()">
     Add rooms
   </button>
-  <input type="text" [(ngModel)]="player.name">
+
+  <input type="text" 
+         [(ngModel)]="player.name">
 </div>
 
 <div class="rooms">
-
   <div class="room-container"
-    *ngFor="let room of rooms" >
+       *ngFor="let room of rooms" >
 
     <div class="room">
-
-
       <div>
         Table# {{room.id}}
-      </div>
-
-    
+      </div>    
 
       <button (click)="deleteRoom(room.id)">
         Delete room
       </button>
       <br>
 
-      <button [routerLink]="room.id" 
-              (click)="addPlayers(room.id)">
+      <button [routerLink]="room.id">
         Enter in room
       </button>
-<!-- 
+
       <button  (click)="addPlayers(room.id)" >
         add player
-      </button> -->
+      </button>
     </div>
   </div>
 </div>

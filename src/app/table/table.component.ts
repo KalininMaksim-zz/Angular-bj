@@ -15,7 +15,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public winer: number = 0;
   public room: Troom;
   public roomId: number;
-  public players: TPlayer;
+  public roomMaster: boolean;
   public playersArray = [];
   public deck: number[];
   public result: string = ``;
@@ -48,12 +48,15 @@ export class TableComponent implements OnInit, OnDestroy {
       tap((room: Troom) => {
         this.room = room;
         this.result = room.result;
-        this.players = room.players;
         this.isInitStaite = room.isInitStaite;
         this.idFromLocalStorage = +localStorage.getItem('id');
-
-        this.playersArray = Object.values(room.players);
         this.deck = room.deck;
+        this.playersArray = Object.values(room.players);
+        // console.log(this.playersArray[0]);
+        // if (this.playersArray[0].roomMaster === false) {
+        //   ///// metod
+        //   this.appointRoomMaster();
+        // }
         this.playersArray.forEach((player) => {
           this.stopCard = player.stopCard;
           if (player.sumCards === this._WIN_STATE) {
@@ -65,16 +68,28 @@ export class TableComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
+  // public appointRoomMaster(): void {
+  //   this.playersArray[0].roomMaster = true;
+  //   this.roomMaster = this.playersArray[0].roomMaster;
+  //   console.log(this.roomMaster);
+  //   // this._dataBase.upDatePlayer(this.roomId, this.playersArray[0].id, this.playersArray[0].cards, this.playersArray[0].roomMaster, this.playersArray[0].myTurn, this.playersArray[0].sumCards, this.playersArray[0].stopCard);
+
+  // }
+
   public startGame(): void {
     this.isInitStaite = false;
     this._dataBase.changeStateRoom(this.roomId, this.isInitStaite);
     this.playersArray[0].roomMaster = true;
     this.playersArray[0].myTurn = true;
+    // this.roomMaster = this.playersArray[0].roomMaster;
+    // console.log(this.roomMaster);
 
     this.playersArray.forEach((player) => {
       player.cards = [];
       player.cards = Object.values(player.cards);
+      // player.cards = this.room.deck.splice(-2, 2);
       player.cards.push(this.room.deck.pop());
+      player.sumCards = this.gameService.getHandSum(player.cards);
       this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
       this._dataBase.upDateDeck(this.roomId, this.room.deck);
     });
@@ -104,6 +119,7 @@ export class TableComponent implements OnInit, OnDestroy {
     this._count++;
     if (this.playersArray.length <= this._count) {
       this._count = 0;
+      this.playersArray[this._count].myTurn = true;
     }
     this.playersArray[this._count].myTurn = true;
     this._dataBase.upDateTurnPlayer(this.roomId, this.playersArray[this._count].id, this.playersArray[this._count].myTurn);
