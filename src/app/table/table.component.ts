@@ -60,7 +60,7 @@ export class TableComponent implements OnInit, OnDestroy {
         this.playersArray.forEach((player) => {
           this.stopCard = player.stopCard;
           if (player.sumCards === this._WIN_STATE) {
-            this.prematureStopGame();
+            // this.prematureStopGame();
           }
         });
         this.chekHowWin = this.playersArray.every((player) => player.stopCard === true);
@@ -97,20 +97,20 @@ export class TableComponent implements OnInit, OnDestroy {
 
   public takeCard(): void {
     this.playersArray.forEach((player, index: number) => {
-      if (this.idFromLocalStorage === player.id && player.stopCard !== true) {
+      if (this.idFromLocalStorage === player.id && player.stopCard === false) {
         this._count = index;
-        player.myTurn = false;
         player.cards.push(this.room.deck.pop());
         player.sumCards = this.gameService.getHandSum(player.cards);
         this._dataBase.upDateDeck(this.roomId, this.room.deck);
+        player.myTurn = false;
         this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
-        if (player.sumCards >= this._WIN_STATE) {
-          this.stopTakeCard();
-        }
+        // if (player.sumCards >= this._WIN_STATE) {
+        //   this.stopTakeCard();
+        // }
       }
     });
     this.passTurn();
-    if (this.playersArray[this._count].stopCard === true || this.playersArray[this._count].myTurn === false) {
+    if (this.playersArray[this._count].stopCard === true && this.playersArray[this._count].myTurn === false) {
       this.passTurn();
     }
   }
@@ -119,9 +119,14 @@ export class TableComponent implements OnInit, OnDestroy {
     this._count++;
     if (this.playersArray.length <= this._count) {
       this._count = 0;
-      this.playersArray[this._count].myTurn = true;
     }
     this.playersArray[this._count].myTurn = true;
+    if (this.playersArray[this._count].stopCard === true) {
+      this.playersArray[this._count].myTurn = false;
+    }
+    if(this.playersArray[this._count].stopCard === true && this.playersArray[this._count].myTurn === false){
+      this.passTurn();
+    }
     this._dataBase.upDateTurnPlayer(this.roomId, this.playersArray[this._count].id, this.playersArray[this._count].myTurn);
   }
 
@@ -130,59 +135,71 @@ export class TableComponent implements OnInit, OnDestroy {
       if (this.idFromLocalStorage === player.id) {
         this._count = index;
         player.stopCard = true;
-        player.myTurn = false;
-        this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
-      }
-    });
-    this.passTurn();
-    this.chekHowWin = this.playersArray.every((player) => player.stopCard === true);
-    if (this.chekHowWin === true) {
-      this.stopGame();
-    }
-  }
-
-  public stopGame(): void {
-    let winner: number = 0;
-    this.playersArray.forEach((player) => {
-      if (player.sumCards > winner && player.sumCards <= this._WIN_STATE) {
-        winner = player.sumCards;
-      } else {
-        this.result = `no body`;
-        this._dataBase.upDateResult(this.roomId, this.result);
-      }
-    });
-    this.playersArray.forEach((player) => {
-      if (player.sumCards === winner) {
-        this.result = `${player.name} winner!!!`;
-        this._dataBase.upDateResult(this.roomId, this.result);
-      }
-    });
-  }
-
-  public prematureStopGame(): void {
-    this.playersArray.forEach((player) => {
-      if (player.stopCard === false) {
+        if (player.stopCard === true) {
+          player.myTurn = false;
+        }
         player.stopCard = true;
         this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
       }
     });
+    this.passTurn();
+    if (this.playersArray[this._count].stopCard === true && this.playersArray[this._count].myTurn === false) {
+      this.passTurn();
+    }
+    // this.chekHowWin = this.playersArray.every((player) => player.stopCard === true);
+    // if (this.chekHowWin === true) {
+    //   this.stopGame();
+    // }
   }
 
-  public reset(): void {
-    this.playersArray.forEach((player) => {
-      player.sumCards = 0;
-      player.cards = [];
-      player.stopCard = false;
-      player.myTurn = false;
-      this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
-    });
-    this.room.deck = this.gameService.generateDeck();
-    this._dataBase.upDateDeck(this.room.id, this.room.deck);
-    this.isInitStaite = true;
-    this.result = ``;
-    this._dataBase.upDateResult(this.roomId, this.result);
-    this._dataBase.changeStateRoom(this.roomId, this.isInitStaite);
-  }
+  // public stopGame(): void {
+  //   let winner: number = 0;
+  //   this.playersArray.forEach((player) => {
+  //     if (player.sumCards > winner && player.sumCards <= this._WIN_STATE) {
+  //       winner = player.sumCards;
+  //     } else {
+  //       this.result = `no body`;
+  //       this._dataBase.upDateResult(this.roomId, this.result);
+  //     }
+  //   });
+  //   this.playersArray.forEach((player) => {
+  //     if (player.sumCards === winner) {
+  //       this.result = `${player.name} winner!!!`;
+  //       this._dataBase.upDateResult(this.roomId, this.result);
+  //     }
+  //   });
+  // }
+
+  // public prematureStopGame(): void {
+  //   this.playersArray.forEach((player) => {
+  //     player.myTurn = false;
+  //     player.stopCard = true;
+  //     // if (player.stopCard === false) {
+  //     //   player.stopCard = true;
+  //       this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+  //     // }
+  //   });
+  // }
+
+  // public reset(): void {
+  //   this.playersArray.forEach((player) => {
+  //     if(player.sumCards === 21){
+  //       player.sumCards = 0;
+  //       player.cards = [];
+  //     }
+  //     player.sumCards = 0;
+  //     player.cards = [];
+  //     player.stopCard = false;
+  //     player.myTurn = false;
+  //     this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+  //   });
+  //   this.room.deck = this.gameService.generateDeck();
+  //   this._dataBase.upDateDeck(this.room.id, this.room.deck);
+  //   this.isInitStaite = true;
+  //   this.result = ``;
+  //   this._dataBase.upDateResult(this.roomId, this.result);
+  //   this._dataBase.changeStateRoom(this.roomId, this.isInitStaite);
+  // }
 
   public ngOnDestroy(): void {
     this._subscription$$.unsubscribe();
