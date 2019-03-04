@@ -104,15 +104,16 @@ export class TableComponent implements OnInit, OnDestroy {
         this._dataBase.upDateDeck(this.roomId, this.room.deck);
         player.myTurn = false;
         this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
-        // if (player.sumCards >= this._WIN_STATE) {
-        //   this.stopTakeCard();
-        // }
+        if (player.sumCards >= this._WIN_STATE) {
+          this.stopTakeCard();
+        }
       }
     });
     this.passTurn();
-    if (this.playersArray[this._count].stopCard === true && this.playersArray[this._count].myTurn === false) {
-      this.passTurn();
-    }
+
+    // if (this.playersArray[this._count].stopCard === true && this.playersArray[this._count].myTurn === false) {
+    //   this.passTurn();
+    // }
   }
 
   public passTurn(): void {
@@ -142,10 +143,17 @@ export class TableComponent implements OnInit, OnDestroy {
         this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
       }
     });
-    this.passTurn();
-    if (this.playersArray[this._count].stopCard === true && this.playersArray[this._count].myTurn === false) {
+    let turn: boolean;
+    turn = this.playersArray.some( player => player.stopCard === false);
+    if (turn === true) {
       this.passTurn();
-    }
+     }
+
+    // this.passTurn();
+    // if (this.playersArray[this._count].stopCard === true && this.playersArray[this._count].myTurn === false) {
+    //   this.passTurn();
+    // }
+
     // this.chekHowWin = this.playersArray.every((player) => player.stopCard === true);
     // if (this.chekHowWin === true) {
     //   this.stopGame();
