@@ -22,7 +22,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public isInitStaite: boolean;
   public stopCard: boolean;
   public idFromLocalStorage: number;
-  public chekHowWin: boolean = false;
+  public checkHowWin: boolean = false;
 
 
   private _WIN_STATE: number = 21;
@@ -59,11 +59,12 @@ export class TableComponent implements OnInit, OnDestroy {
         // }
         this.playersArray.forEach((player) => {
           this.stopCard = player.stopCard;
-          if (player.sumCards === this._WIN_STATE) {
-            // this.prematureStopGame();
-          }
+          // if (player.sumCards === this._WIN_STATE) {
+          //   // this.prematureStopGame();
+          //   this.stopTakeCard();
+          // }
         });
-        this.chekHowWin = this.playersArray.every((player) => player.stopCard === true);
+        this.checkHowWin = this.playersArray.every((player) => player.stopCard === true);
       })
     ).subscribe();
   }
@@ -154,29 +155,29 @@ export class TableComponent implements OnInit, OnDestroy {
     //   this.passTurn();
     // }
 
-    // this.chekHowWin = this.playersArray.every((player) => player.stopCard === true);
-    // if (this.chekHowWin === true) {
-    //   this.stopGame();
-    // }
+    this.checkHowWin = this.playersArray.every((player) => player.stopCard === true);
+    if (this.checkHowWin === true) {
+      this.stopGame();
+    }
   }
 
-  // public stopGame(): void {
-  //   let winner: number = 0;
-  //   this.playersArray.forEach((player) => {
-  //     if (player.sumCards > winner && player.sumCards <= this._WIN_STATE) {
-  //       winner = player.sumCards;
-  //     } else {
-  //       this.result = `no body`;
-  //       this._dataBase.upDateResult(this.roomId, this.result);
-  //     }
-  //   });
-  //   this.playersArray.forEach((player) => {
-  //     if (player.sumCards === winner) {
-  //       this.result = `${player.name} winner!!!`;
-  //       this._dataBase.upDateResult(this.roomId, this.result);
-  //     }
-  //   });
-  // }
+  public stopGame(): void {
+    let winner: number = 0;
+    this.playersArray.forEach((player) => {
+      if (player.sumCards > winner && player.sumCards <= this._WIN_STATE) {
+        winner = player.sumCards;
+      } else {
+        this.result = `no body`;
+        this._dataBase.upDateResult(this.roomId, this.result);
+      }
+    });
+    this.playersArray.forEach((player) => {
+      if (player.sumCards === winner) {
+        this.result = `${player.name} winner!!!`;
+        this._dataBase.upDateResult(this.roomId, this.result);
+      }
+    });
+  }
 
   // public prematureStopGame(): void {
   //   this.playersArray.forEach((player) => {
@@ -189,25 +190,21 @@ export class TableComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  // public reset(): void {
-  //   this.playersArray.forEach((player) => {
-  //     if(player.sumCards === 21){
-  //       player.sumCards = 0;
-  //       player.cards = [];
-  //     }
-  //     player.sumCards = 0;
-  //     player.cards = [];
-  //     player.stopCard = false;
-  //     player.myTurn = false;
-  //     this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
-  //   });
-  //   this.room.deck = this.gameService.generateDeck();
-  //   this._dataBase.upDateDeck(this.room.id, this.room.deck);
-  //   this.isInitStaite = true;
-  //   this.result = ``;
-  //   this._dataBase.upDateResult(this.roomId, this.result);
-  //   this._dataBase.changeStateRoom(this.roomId, this.isInitStaite);
-  // }
+  public reset(): void {
+    this.playersArray.forEach((player) => {
+      player.cards = [];
+      player.sumCards = 0;
+      player.stopCard = false;
+      player.myTurn = false;
+      this._dataBase.upDatePlayer(this.roomId, player.id, player.cards, player.roomMaster, player.myTurn, player.sumCards, player.stopCard);
+    });
+    this.room.deck = this.gameService.generateDeck();
+    this._dataBase.upDateDeck(this.room.id, this.room.deck);
+    this.isInitStaite = true;
+    this.result = ``;
+    this._dataBase.upDateResult(this.roomId, this.result);
+    this._dataBase.changeStateRoom(this.roomId, this.isInitStaite);
+  }
 
   public ngOnDestroy(): void {
     this._subscription$$.unsubscribe();
